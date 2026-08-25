@@ -32,6 +32,27 @@ services:
         networks:
             - hr
 
+    node:
+        build:
+            context: .
+            dockerfile: docker/node/Dockerfile
+        container_name: bpdb_hr_node
+        working_dir: /app
+        restart: unless-stopped
+        volumes:
+            - .:/app
+        command: >
+            sh -c "
+                pnpm install --config.confirmModulesPurge=false &&
+                pnpm dev --host 0.0.0.0
+            "
+        ports:
+            - "5174:5173"
+        depends_on:
+            - app
+        networks:
+            - hr
+
     db:
         image: postgres:17
         container_name: bpdb_hr_db
@@ -39,7 +60,7 @@ services:
         environment:
             POSTGRES_DB: bpdb_hr_recruitment
             POSTGRES_USER: bpdb_hr
-            POSTGRES_PASSWORD: bpdbpensionapp123
+            POSTGRES_PASSWORD: bpdb_hr_password
         ports:
             - "127.0.0.1:5433:5432"
         volumes:
