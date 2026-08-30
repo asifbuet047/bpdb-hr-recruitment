@@ -4,7 +4,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: bpdb_hr_app
+        container_name: bpdb_recruitment_app
         working_dir: /var/www
         restart: unless-stopped
         volumes:
@@ -20,7 +20,7 @@ services:
 
     web:
         image: nginx:alpine
-        container_name: bpdb_hr_web
+        container_name: bpdb_recruitment_web
         restart: unless-stopped
         ports:
             - "8081:80"
@@ -36,15 +36,15 @@ services:
         build:
             context: .
             dockerfile: docker/node/Dockerfile
-        container_name: bpdb_hr_node
+        container_name: bpdb_recruitment_node
         working_dir: /app
         restart: unless-stopped
         volumes:
             - .:/app
         command: >
             sh -c "
-                pnpm install --config.confirmModulesPurge=false &&
-                pnpm dev --host 0.0.0.0
+              pnpm install --frozen-lockfile --config.confirmModulesPurge=false &&
+              tail -f /dev/null
             "
         ports:
             - "5174:5173"
@@ -55,12 +55,12 @@ services:
 
     db:
         image: postgres:17
-        container_name: bpdb_hr_db
+        container_name: bpdb_recruitment_db
         restart: unless-stopped
         environment:
             POSTGRES_DB: bpdb_hr_recruitment
             POSTGRES_USER: bpdb_hr
-            POSTGRES_PASSWORD: bpdb_hr_password
+            POSTGRES_PASSWORD: bpdbpensionapp123
         ports:
             - "127.0.0.1:5433:5432"
         volumes:
@@ -79,7 +79,7 @@ services:
 
     redis:
         image: redis:7-alpine
-        container_name: bpdb_hr_redis
+        container_name: bpdb_recruitment_redis
         restart: unless-stopped
         ports:
             - "127.0.0.1:6380:6379"

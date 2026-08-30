@@ -1,9 +1,130 @@
-@import 'tailwindcss';
+body {
+    padding-top: 80px;
+    min-height: 100vh;
+}
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+header.fixed-top {
+    backdrop-filter: blur(6px);
+    background-color: rgba(255, 255, 255, 0.95);
+    z-index: 1030;
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* ---------------------------------------------------------
+   Navigation
+   --------------------------------------------------------- */
+
+.navbar-nav .nav-link {
+    position: relative;
+    display: inline-block;
+
+    padding: 0.75rem 1rem;
+    margin: 0 0.25rem;
+
+    color: #2c3e50;
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.25s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0d6efd;
+}
+
+.navbar-nav .nav-link.active {
+    color: #0d6efd !important;
+}
+
+.navbar-nav .nav-link::after {
+    content: "";
+
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+
+    width: 70%;
+    height: 3px;
+
+    background: #0d6efd;
+    border-radius: 999px;
+
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+
+    transition: transform 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* ---------------------------------------------------------
+   Footer
+   --------------------------------------------------------- */
+
+footer {
+    margin-top: auto;
+}
+
+/* ---------------------------------------------------------
+   Login / Starting Page
+   --------------------------------------------------------- */
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+/* ---------------------------------------------------------
+   Bootstrap Icons
+   --------------------------------------------------------- */
+
+.bi {
+    vertical-align: -0.125em;
+}
+
+/* ---------------------------------------------------------
+   Responsive Navigation
+   --------------------------------------------------------- */
+
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        padding-top: 0.75rem;
+    }
+
+    .navbar-nav .nav-link {
+        display: block;
+        margin: 0.1rem 0;
+    }
+
+    .navbar-nav .nav-link::after {
+        display: none;
+    }
+}
+
+/* ---------------------------------------------------------
+   Accessibility
+   --------------------------------------------------------- */
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.35);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------
+   Print
+   --------------------------------------------------------- */
+
+@media print {
+    header.fixed-top,
+    footer {
+        display: none !important;
+    }
+
+    body {
+        padding-top: 0;
+    }
 }
